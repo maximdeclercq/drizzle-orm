@@ -150,6 +150,9 @@ export class SQLiteTimestamp<T extends ColumnBaseConfig<'date', 'SQLiteTimestamp
 	}
 
 	override mapToDriverValue(value: Date): number {
+		if (value === null || value === undefined) {
+			return null;
+		}
 		const unix = value.getTime();
 		if (this.config.mode === 'timestamp') {
 			return Math.floor(unix / 1000);
